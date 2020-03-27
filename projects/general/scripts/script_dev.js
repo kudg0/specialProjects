@@ -10,6 +10,60 @@ if (window.addEventListener) {
   }
 
   function specInit(){
+    //Глобальная фукнция подключения файлов. Возращает true, когда файл подключен и false, када нет
+    window.specAddFile = async function(addFile_atr, addFile_place, addFile_link){
+      let cretedElem = document.createElement(addFile_atr);
+
+
+      switch(addFile_atr){
+
+        case "script":
+          cretedElem.type = "text/javascript";
+          cretedElem.charset = "UTF-8";
+          cretedElem.src = addFile_link;
+        break;
+
+        case "link":
+          cretedElem.href = addFile_link;
+          cretedElem.rel = "stylesheet";
+          cretedElem.media = "all";
+        break;
+
+        default: 
+        //Жалуемся дебагеру на ошибку
+          window.postMessage({
+            debugger: "true",
+            message: `Error in specAddFile(). GetParams(link: ${addFile_link}, attr: ${addFile_atr}, place: ${addFile_place})`
+          });
+        break;
+        //END
+      }
+      let elem = addFile_place.appendChild(cretedElem);
+
+
+      let promise = new Promise((resolve, reject) => {
+        let timer = setTimeout(() =>{
+          resolve(false);
+        },10000);
+
+        elem.addEventListener("load", (e) =>{
+          clearTimeout(timer);
+
+          resolve(true);
+        });
+      });
+
+
+      let result = await promise;
+
+
+      return result;
+    }
+    //END
+
+
+
+
     //Задаем глобальный объект со всеми стэйтами и переменными 
     window.spec__properties = {
       body: document.querySelector("body"),
@@ -111,10 +165,10 @@ if (window.addEventListener) {
     }
     //*OVER*
 
-    //
+    
 
 
-
+    //Определяем сайт и контейнер тела поста
     if(window.location.origin.includes("wonderzine")){
       spec__properties.site = "wonderzine";
       spec__properties.postHolder = document.querySelector(".article-text");
@@ -127,13 +181,12 @@ if (window.addEventListener) {
       spec__properties.site = "spletnik";
       spec__properties.postHolder = document.querySelector(".content");
     }
+    //*OVER*
 
 
 
     //подключение дебаггера
-    specAddFile("script", spec__properties.body, "https://lamcdn.net/specials.lookatme.ru/0000000001/banners/system/specials_react/projects/general/scripts/specDebugger.js");
-
-
+    specAddFile("script", spec__properties.body, "https://lamcdn.net/specials.lookatme.ru/0000000001/banners/system/specialProjects/projects/general/scripts/specDebugger.js");
 
     //структура сообщения для дебаггера 
     /*
@@ -145,96 +198,13 @@ if (window.addEventListener) {
 
 
 
-    //подключение react
-    let spec__reactAdded = 0;
-    let links = ["https://unpkg.com/react-dom@16/umd/react-dom.development.js", "https://unpkg.com/react@16/umd/react.development.js"];
-    links.forEach((link) =>{
-      specAddFile("script", spec__properties.body, link)
-        .then((e) => {
-          if(e == true){
-            spec__reactAdded++;
-          }
-          if(e == false){
-            throw new Error(`скрипт не покдлючился ${e}`);
-          }
-
-          if(spec__reactAdded == links.length){
-            spec__reactAdded = true;
-
-            // specAddFile("script", spec__properties.body, "projects/general/scripts/postComponent.js")
-          }
-        })
-        .catch((e) =>{
-          window.postMessage({
-            debugger: "true",
-            message: `Error than add react: ${e}.`
-          });
-        });
-    });
-    //END
-
 
 
 
     
-
-
-
-
-
-
-
-
-    //Возращает true, когда файл подключен и false, када нет
-    window.specAddFile = async function(addFile_atr, addFile_place, addFile_link){
-      let cretedElem = document.createElement(addFile_atr);
-
-
-      switch(addFile_atr){
-
-        case "script":
-          cretedElem.type = "text/javascript";
-          cretedElem.charset = "UTF-8";
-          cretedElem.src = addFile_link;
-        break;
-
-        case "link":
-          cretedElem.href = addFile_link;
-          cretedElem.rel = "stylesheet";
-          cretedElem.media = "all";
-        break;
-
-        default: 
-        //Жалуемся дебагеру на ошибку
-          window.postMessage({
-            debugger: "true",
-            message: `Error in specAddFile(). GetParams(link: ${addFile_link}, attr: ${addFile_atr}, place: ${addFile_place})`
-          });
-        break;
-        //END
-      }
-      let elem = addFile_place.appendChild(cretedElem);
-
-
-      let promise = new Promise((resolve, reject) => {
-        let timer = setTimeout(() =>{
-          resolve(false);
-        },10000);
-
-        elem.addEventListener("load", (e) =>{
-          clearTimeout(timer);
-
-          resolve(true);
-        });
-      });
-
-
-      let result = await promise;
-
-
-      return result;
-    }
-    //END
+    // window.gtag = function(){
+    //   console.log(true);
+    // }
 
 
     function mobileCheck() {
@@ -244,6 +214,5 @@ if (window.addEventListener) {
     }
 
     window.dispatchEvent(event__general__init);
-    spec__properties.pageState
   }
 }

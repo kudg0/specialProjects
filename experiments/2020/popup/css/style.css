@@ -1,0 +1,158 @@
+@font-face {
+  font-family: "IBMPlexSans-Medium";
+  src: url("https://lamcdn.net/specials.lookatme.ru/brandings/assets/IBMPlexSans-Medium/IBMPlexSans-Medium.woff ");
+  src: url("https://lamcdn.net/specials.lookatme.ru/brandings/assets/IBMPlexSans-Medium/IBMPlexSans-Medium.woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "IBMPlexSans-Light";
+  src: url("https://lamcdn.net/specials.lookatme.ru/brandings/assets/IBMPlexSans-Light/IBMPlexSans-Light.woff ");
+  src: url("https://lamcdn.net/specials.lookatme.ru/brandings/assets/IBMPlexSans-Light/IBMPlexSans-Light.woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@keyframes appereance {
+  from {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+@keyframes desAppereance {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    transform: translateX(30vw);
+    opacity: 0;
+  }
+}
+@keyframes desAppereance_mob {
+  from {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-150vw);
+    opacity: 0;
+  }
+}
+
+.spec__mainOverlay .spec__popup {
+  display: none;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  background: #fff;
+  border: 1px solid #000;
+  width: 320px;
+}
+body.mobile .spec__mainOverlay .spec__popup {
+  display: none;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background: #fff;
+  border: 1px solid #fff;
+  width: 320px;
+}
+.spec__mainOverlay.detected .spec__popup_on {
+  display: flex !important;
+  opacity: 0;
+  transform: translateX(30vw);
+  animation: 1s appereance cubic-bezier(0.65, 0.13, 0.36, 1.31) 1.5s forwards;
+}
+.spec__mainOverlay.detected .spec__popup_off {
+  display: flex !important;
+  opacity: 1;
+  transform: translateX(0vw);
+  animation: 1s desAppereance cubic-bezier(1,.02,.82,1.21) 0.1s forwards;
+}
+body.mobile .spec__mainOverlay.detected .spec__popup_off {
+  animation: .5s desAppereance_mob cubic-bezier(1,.02,.82,1.21) 0.1s forwards;
+}
+body.mobile .spec__mainOverlay.detected .spec__popup_on {
+  transform: translateX(150vw);
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 20px 0;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 85%;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__inner * {
+  color: #000000;
+  font-size: 12px;
+  line-height: 16px;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__inner .popup--title {
+  font-family: IBMPlexSans-Medium;
+  margin-bottom: 8px;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__inner .popup--subtitle {
+  font-family: IBMPlexSans-Light;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__close .close__overlay {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition-duration: 0.5s;
+  pointer-events: auto;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__close .close__overlay:hover {
+  transition-duration: 1.5s;
+  transform: rotate(720deg);
+  transition-timing-function: ease-out;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__close .close__overlay:active {
+  transition-duration: 0.5s;
+  transform: scale(2);
+  transition-timing-function: ease-in;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__close .close__overlay::after, .spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__close .close__overlay::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  width: 100%;
+  height: 1px;
+  background: #000;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__close .close__overlay::after {
+  transform: rotate(45deg);
+  transform-origin: center center;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup__close .close__overlay::before {
+  transform: rotate(-45deg);
+  transform-origin: center center;
+}
+.spec__mainOverlay.detected .spec__popup .popup__wrapper .popup--close::after {
+  width: 100%;
+}
