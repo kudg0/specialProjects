@@ -8,27 +8,12 @@ if(document.readyState == "complete"){
 
 
 function expPageReadedOnInit(){
-  if(window['spec__properties']){
-    if(spec__properties.experiments.articleReaded.on){
-      expPageReadedOn();
-    } else{
-      window.addEventListener("specProperiesChanged", (e) => {
-        if(spec__properties.experiments.articleReaded.on){
-          expPageReadedOn();
-        }
-      });
-    }
-  }
-  else{
-    window.addEventListener("specScriptInit", (e) =>{
+  if(spec__properties.experiments.articleReaded.on){
+    expPageReadedOn();
+  } else{
+    window.addEventListener("specProperiesChanged", (e) => {
       if(spec__properties.experiments.articleReaded.on){
         expPageReadedOn();
-      } else{
-        window.addEventListener("specProperiesChanged", (e) => {
-          if(spec__properties.experiments.articleReaded.on){
-            expPageReadedOn();
-          }
-        });
       }
     });
   }
@@ -37,7 +22,6 @@ function expPageReadedOnInit(){
 
 
 function expPageReadedOn() {
-
   try{
     let event__reading_start = new Event("startReading", {bubbles: true}),
         event__reading_end = new Event("endReading", {bubbles: true}),
@@ -145,7 +129,7 @@ function expPageReadedOn() {
     let otherTimeForReading = Math.round(( ( (counter_arr_text.split(/[^0-9a-zA-Zа-яА-Я]/).filter(Boolean).length / 250) * 60) + (counterOfImg * 2) )) ;
     
     spec__properties.experiments.articleReaded.stateNow = "init";
-    console.log(spec__properties.experiments.articleReaded.stateNow);
+    
     window.dispatchEvent(event__timeCalc);
 
     // console.log("Время на прочтение: ", timeForReading);
@@ -195,7 +179,7 @@ function expPageReadedOn() {
       }
     });
 
-    
+
     function articleReaded(){
       gtag('event', 'Read Article');
 

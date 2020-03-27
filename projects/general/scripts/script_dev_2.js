@@ -21,7 +21,22 @@ if (window.addEventListener) {
       isSpecial: window.location.href.includes("specials") || Boolean(document.querySelector(".s-label")),
       isMobile: Boolean(mobileCheck()),
       experiments:{
+        on: true,
         articleReaded:{
+          on: true,
+          state: false,
+          get stateNow(){
+            return this.state
+          },
+          set stateNow(stateNow){
+            this.state = stateNow;
+            this.update(this.state);
+          },
+          update() {
+            window.dispatchEvent(spec__properties.eventChangeParam);
+          }
+        },
+        overlay:{
           on: true,
           state: false,
           get stateNow(){
@@ -171,7 +186,7 @@ if (window.addEventListener) {
 
 
     //Возращает true, когда файл подключен и false, када нет
-    async function specAddFile(addFile_atr, addFile_place, addFile_link){
+    window.specAddFile = async function(addFile_atr, addFile_place, addFile_link){
       let cretedElem = document.createElement(addFile_atr);
 
 
