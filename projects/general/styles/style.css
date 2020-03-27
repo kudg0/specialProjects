@@ -1,0 +1,13 @@
+
+
+
+
+.promoblock_specials a, .promoblock_btn a {
+  color: inherit !important;
+}
+.header__special a:hover{
+  text-decoration: underline;
+}
+.promoblock_btn a, .header__special a {
+  text-decoration: none !important;
+}
